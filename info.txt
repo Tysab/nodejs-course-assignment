@@ -1,0 +1,11 @@
+Build back-end of Vidly (Imaginary service for renting out movies)
+
+Create service for managing the list of genres, so each movie has a genre like action, horror etc.
+
+Endpoint for getting a list for all genres, because somewhere in the client application, we might have a drop-down list for the user to select a genre.
+
+Update or delete an existing one.
+
+Never trust ANY data sent by the client. Always validate! 
+
+Use @hapi/joi for input validation and showing errors

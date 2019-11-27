@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.jshttps://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+    <style>
+        /* Set a background image by replacing the URL below */
+        body {
+            background: url('https://source.unsplash.com/twukN12EN7c/1920x1080') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .nav-button {
+            float: right;
+            border-radius: 20px;
+            border: none;
+        }
+    </style>
+    <title>Vidly</title>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#">Vidly</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-5">
+
+                <h1>Add a course</h1>
+                <form method="POST" action="/courses/add">
+                    <strong>Name: </strong><input type="text" name="name"><br>
+
+                    <strong>Category: </strong><select name="category">
+
+                        <option value="web">web</option>
+                        <option value="mobile">mobile</option>
+                        <option value="network">network</option>
+
+                    </select><br>
+                    <strong>Tags: </strong><input type="text" name="tags"><br>
+                    <strong>Price: </strong><input type="number" step="0.01" name="price"><br>
+
+                    <strong>Difficulty: </strong><select name="difficulty">
+
+                        <% for(let i = 0; i < difficulty.length; i++) { %>
+
+                            <option value="<%= difficulty[i]._id %>"><%= difficulty[i].level %></option>
+
+                        <% } %>
+
+                    </select><br>
+
+                    <strong>Author: </strong><select name="author">
+
+                        <% for(let i = 0; i < author.length; i++) { %>
+
+                            <option value="<%= author[i]._id %>"> <%= author[i].name %> </option>
+
+                        <% } %>
+
+                    </select><br>
+
+                    <input type="submit">
+                </form>
+
+                <button onclick="window.location.href='/courses'" class="nav-button">Back to courses</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
