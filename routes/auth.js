@@ -2,14 +2,14 @@
 
 const express = require('express');
 const router = express.Router();
-const { Author } = require('../models/author');
+const {
+    Author
+} = require('../models/author');
 const Fawn = require('fawn');
 const sanitizeHtml = require('sanitize-html');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const Joi = require('@hapi/joi');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 
 
 
@@ -23,7 +23,9 @@ router.get('/', async (req, res) => { // views all courses
 
 router.post('/', async (req, res) => {
 
-    const { error } = validate(req.body);
+    const {
+        error
+    } = validate(req.body);
 
     if (!error) {
         console.log('Author input-validation pass');
@@ -49,11 +51,11 @@ router.post('/', async (req, res) => {
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
 
-    if(!validPassword) return res.status(400).send('Invalid email or password <a href="/auth">Try again</a>');
+    if (!validPassword) return res.status(400).send('Invalid email or password <a href="/auth">Try again</a>');
 
-    const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey'));
+    const token = user.generateAuthToken();
 
-    res.send(token);
+    res.header('x-auth-token', token).send(_.pick(author, ['_id', 'name', 'email']));
 
 
     // let author = new Author(_.pick(req.body, ['name', 'email', 'password']));
@@ -67,7 +69,7 @@ router.post('/', async (req, res) => {
     //     //res.send('account created! go to back to <a href="/">home</a>');
 
     //     res.send(_.pick(author, ['name', 'email']));
-    
+
     // } catch (ex) {
     //         console.log(ex);
     // }

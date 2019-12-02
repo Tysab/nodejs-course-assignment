@@ -1,8 +1,9 @@
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
 
-
-const Author = mongoose.model('Author', new mongoose.Schema({
+const authorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -24,7 +25,14 @@ const Author = mongoose.model('Author', new mongoose.Schema({
         minLength: 6,
         maxLength: 1024
     }
-}));
+});
+
+authorSchema.methods.generateAuthToken = function() {
+    const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
+    return token;
+};
+
+const Author = mongoose.model('Author', authorSchema);
 
 function validateAuthor(author) {
     const schema = Joi.object({

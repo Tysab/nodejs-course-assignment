@@ -1,5 +1,7 @@
 // root path is /register
 
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const express = require('express');
 const router = express.Router();
 const { Author, validate } = require('../models/author');
@@ -35,6 +37,7 @@ router.post('/', async (req, res) => {
     if (user) return res.status(400).send('This email is already in use <a href="/register">Try again</a>');
 
 
+
     // let author = new Author({
     //     name: sanitizeHtml(req.body.name),
     //     email: sanitizeHtml(req.body.email),
@@ -51,8 +54,11 @@ router.post('/', async (req, res) => {
         console.log(result);
         //res.send('account created! go to back to <a href="/">home</a>');
 
-        res.send(_.pick(author, ['name', 'email']));
-    
+        const token = author.generateAuthToken();
+
+        res.header('x-auth-token', token).send(_.pick(author, ['_id', 'name', 'email']));
+
+
     } catch (ex) {
             console.log(ex);
     }
