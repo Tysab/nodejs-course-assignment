@@ -1,10 +1,11 @@
 // root path is /courses/delete
 
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 const { Course } = require('../models/course');
 
-router.get('/:id/:name', async (req, res) => { // deletes specific course
+router.get('/:id/:name', auth, async (req, res) => { // deletes specific course
 
     try {
         const remove = await Course.findByIdAndRemove(req.params.id);

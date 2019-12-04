@@ -74,7 +74,7 @@
 
                 <script>
                     
-                    function confirmDelete() // this has to be encapsulated/abstracted
+                    function confirmDelete() // This has to be encapsulated
                     {
                         var r = confirm('Are you sure you want to remove this course?');
                         r ? window.location.href = '/courses/delete/<%= id %>/<%= name %>' : console.log("False delete request");

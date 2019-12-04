@@ -58,7 +58,6 @@ router.post('/', async (req, res) => {
 
         res.header('x-auth-token', token).send(_.pick(author, ['_id', 'name', 'email']));
 
-
     } catch (ex) {
             console.log(ex);
     }

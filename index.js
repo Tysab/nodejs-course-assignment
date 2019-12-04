@@ -21,6 +21,8 @@ if(!config.get('jwtPrivateKey'))
 {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
     process.exit(1);
+} else{
+    console.log(`PRIVATE KEY IS: ${config.get('jwtPrivateKey')}`);
 }
 
 //mongoose.connect('mongodb://localhost/mongo-vidly')

@@ -1,11 +1,11 @@
 // root path is /courses/add
-
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Fawn = require('fawn');
-const { Author, validate } = require('../models/author');
-const { Course } = require('../models/course');
+const { Author } = require('../models/author');
+const { Course, validate } = require('../models/course');
 const { Difficulty } = require('../models/difficulty');
 
 Fawn.init(mongoose);
@@ -38,7 +38,16 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
+
+    const { error } = validate(req.body);
+
+    if (!error) {
+        console.log('Course input-validation pass');
+    } else if (error) {
+        console.log(error);
+        return res.status(400).send(`Something went wrong: ${error.details[0].message}`);
+    }
 
     try {
         let course = new Course({

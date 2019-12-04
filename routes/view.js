@@ -1,5 +1,6 @@
 // root path is /courses/view
 
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 const { Course, validate } = require('../models/course');
@@ -40,7 +41,7 @@ router.get('/:id/:name', async (req, res) => { // views specific course
 
 });
 
-router.post('/change', async (req, res) => {
+router.post('/change', auth, async (req, res) => {
     const {
         error
     } = validate(req.body);
