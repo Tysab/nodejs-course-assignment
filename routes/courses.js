@@ -17,6 +17,8 @@ const {
 router.get('/', async (req, res) => { // views all courses
     console.log('Connected to /courses');
 
+    throw new Error('Could not get the courses.');
+
     Difficulty.find()
         .select('level')
         .then(result_dif => {
