@@ -65,8 +65,9 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
 
-    //  Delete token on client side
-    res.header('x-auth-token', token).send(_.pick(author, ['_id', 'name', 'email']));
+    //  Delete token on client side on logout
+    //res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
+    res.header('x-auth-token', token).send(token);
 
     // let author = new Author(_.pick(req.body, ['name', 'email', 'password']));
 
