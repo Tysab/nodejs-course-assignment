@@ -1,5 +1,6 @@
 // root path is /auth
 
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 const {
@@ -12,6 +13,18 @@ const bcrypt = require('bcrypt');
 const Joi = require('@hapi/joi');
 
 
+router.get('/me', auth, async (req, res) => {
+    console.log('connected to /me');
+
+    const author = await Author
+        .findById(req.author._id)
+        .select('-password')
+        .catch(err => {
+            console.error(err);
+        });
+
+    res.send(author);
+});
 
 router.get('/', async (req, res) => { // views all courses
     console.log('Connected to /auth');

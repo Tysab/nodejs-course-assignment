@@ -4,7 +4,10 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const express = require('express');
 const router = express.Router();
-const { Author, validate } = require('../models/author');
+const {
+    Author,
+    validate
+} = require('../models/author');
 const Fawn = require('fawn');
 const sanitizeHtml = require('sanitize-html');
 const _ = require('lodash');
@@ -21,7 +24,9 @@ router.get('/', async (req, res) => { // views all courses
 
 router.post('/', async (req, res) => {
 
-    const { error } = validate(req.body);
+    const {
+        error
+    } = validate(req.body);
 
     if (!error) {
         console.log('Author input-validation pass');
@@ -59,7 +64,7 @@ router.post('/', async (req, res) => {
         res.header('x-auth-token', token).send(_.pick(author, ['_id', 'name', 'email']));
 
     } catch (ex) {
-            console.log(ex);
+        console.log(ex);
     }
 
     //new Fawn.Task()
