@@ -8,7 +8,7 @@ const { Author } = require('../models/author');
 const { Difficulty } = require('../models/difficulty');
 
 
-router.get('/', async (req, res) => { // views all courses
+router.get('/', async (req, res, next) => { // views all courses
     console.log('Connected to /courses');
 
     try {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => { // views all courses
                 Author.find()
                 .select()
                 .then(result_auth => {
-                Course.find('something')
+                Course.find()
                     // .skip((pageNumber - 1) * pageSize)
                     // .limit(pageSize)
                     .sort({
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => { // views all courses
 
 
     } catch (err) {
-        res.status(500).send(`Something went wrong: ${err.message}`);
+        next(ex);
     }
 
 });
