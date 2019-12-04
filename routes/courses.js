@@ -16,9 +16,9 @@ router.get('/', async (req, res) => { // views all courses
             .select('level')
             .then(result_dif => {
                 Author.find()
-                .select('name')
+                .select()
                 .then(result_auth => {
-                Course.find()
+                Course.find('something')
                     // .skip((pageNumber - 1) * pageSize)
                     // .limit(pageSize)
                     .sort({
@@ -43,16 +43,16 @@ router.get('/', async (req, res) => { // views all courses
                         //console.log(result_dif);
                         //console.log(result_course);
                     })
-                    .catch(result => {
-                        res.status(404).send(result);
+                    .catch(error => {
+                        res.status(500).send(`Database error: ${error.message}`);
                     });
                 });
 
             });
 
 
-    } catch (e) {
-        res.status(404).send(e);
+    } catch (err) {
+        res.status(500).send(`Something went wrong: ${err.message}`);
     }
 
 });
