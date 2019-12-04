@@ -1,6 +1,7 @@
 require('dotenv').config();
 require('express-async-errors');
 const winston = require('winston');
+require('winston-mongodb');
 const error = require('./middleware/error');
 const config = require('config');
 const express = require('express');
@@ -23,6 +24,7 @@ const auth = require('./routes/auth');
 const port = process.env.PORT || 3000;
 
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.MongoDB({ db: keys.mongodb }));
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');

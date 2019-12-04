@@ -23,6 +23,7 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.7.12",
     "sanitize-html": "^1.20.1",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.1"
   }
 }
