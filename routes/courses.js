@@ -1,7 +1,6 @@
 // root path is /courses
 
 const express = require('express');
-const asyncMiddleware = require('../middleware/async');
 const router = express.Router();
 const mongoose = require('mongoose');
 const {
@@ -14,7 +13,8 @@ const {
     Difficulty
 } = require('../models/difficulty');
 
-router.get('/', asyncMiddleware(async (req, res) => { // views all courses
+
+router.get('/', async (req, res) => { // views all courses
     console.log('Connected to /courses');
 
     Difficulty.find()
@@ -55,7 +55,7 @@ router.get('/', asyncMiddleware(async (req, res) => { // views all courses
 
         });
 
-}));
+});
 
 
 module.exports = router;

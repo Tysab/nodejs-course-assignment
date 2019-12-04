@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('express-async-errors');
 const error = require('./middleware/error');
 const config = require('config');
 const express = require('express');
