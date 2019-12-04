@@ -53,14 +53,11 @@ router.post('/', async (req, res) => {
 
     if (!user) return res.status(400).send('Invalid email or password <a href="/auth">Try again</a>');
 
-
     // let author = new Author({
     //     name: sanitizeHtml(req.body.name),
     //     email: sanitizeHtml(req.body.email),
     //     password: sanitizeHtml(req.body.password)
     // });
-
-
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
 
@@ -68,8 +65,8 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
 
+    //  Delete token on client side
     res.header('x-auth-token', token).send(_.pick(author, ['_id', 'name', 'email']));
-
 
     // let author = new Author(_.pick(req.body, ['name', 'email', 'password']));
 
