@@ -11,6 +11,11 @@ const {
     keys
 } = require('./keys');
 
+process.on('uncaughtException', (ex) => {
+    console.log('WE GOT AN UNCAUGHT EXCEPTION');
+    winston.error(ex.message, ex);
+})
+
 // Calling routes
 const home = require('./routes/home');
 const login = require('./routes/login');
@@ -23,8 +28,16 @@ const auth = require('./routes/auth');
 
 const port = process.env.PORT || 3000;
 
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
-winston.add(new winston.transports.MongoDB({ db: keys.mongodb }));
+winston.add(new winston.transports.File({
+    filename: 'logfile.log'
+}));
+
+winston.add(new winston.transports.MongoDB({
+    db: keys.mongodb,
+    level: 'info'
+}));
+
+throw new Error('Index.js error');
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
