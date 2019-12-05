@@ -57,18 +57,17 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 //  Setting routes
-app.use('/', home); // sets / path to home.js router
-app.use('/auth', auth); // sets /auth path to auth.js router
-app.use('/login', login); // sets /login path to login.js router
-app.use('/register', register); // sets /register path to register.js router
-app.use('/courses', courses); // sets /courses path to courses.js router
-app.use('/courses/view', view); // sets /courses/view path to courses.js router
-app.use('/courses/add', add); // sets /courses/add path to courses.js router
-app.use('/courses/add', add); // sets /courses/add path to courses.js router
-app.use('/courses/delete', del); // sets /courses/delete path to courses.js router
+app.use('/', home);                         // sets / path to home.js router
+app.use('/auth', auth);                     // sets /auth path to auth.js router
+app.use('/login', login);                   // sets /login path to login.js router
+app.use('/register', register);             // sets /register path to register.js router
+app.use('/courses', courses);               // sets /courses path to courses.js router
+app.use('/courses/view', view);             // sets /courses/view path to courses.js router
+app.use('/courses/add', add);               // sets /courses/add path to courses.js router
+app.use('/courses/add', add);               // sets /courses/add path to courses.js router
+app.use('/courses/delete', del);            // sets /courses/delete path to courses.js router
 
 app.use(error);
-
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
