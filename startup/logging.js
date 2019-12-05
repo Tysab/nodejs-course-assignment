@@ -10,9 +10,15 @@ module.exports = function (key) {
     //     process.exit(1);
     // });
 
-    winston.handleExceptions(new winston.transports.File({
-        filename: 'uncaughtExceptions.log'
-    }));
+    winston.handleExceptions(
+        new winston.transports.Console({
+            colorize: true,
+            prettyPrint: true
+        }),
+        new winston.transports.File({
+            filename: 'uncaughtExceptions.log'
+        })
+    );
 
     process.on('unhandledRejection', (ex) => {
         throw ex;
