@@ -8,4 +8,4 @@ module.exports = function () {
     } else {
         console.log(`PRIVATE KEY IS: ${config.get('jwtPrivateKey')}`);
     }
-}
+};
