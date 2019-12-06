@@ -1,6 +1,6 @@
 //  Loading modules
 const winston = require('winston');
-require('winston-mongodb');
+//require('winston-mongodb');
 require('express-async-errors');
 
 module.exports = function (key) {
@@ -37,15 +37,15 @@ module.exports = function (key) {
         }));
 
 
-    winston.add(new winston.transports.MongoDB({
-        db: key,
-        level: 'info',
-        format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.printf(info => `${info.timestamp} [${info.level}]: ${info.message}`),
-        ),
-        handleExceptions: true
-    }));
+    // winston.add(new winston.transports.MongoDB({
+    //     db: key,
+    //     level: 'info',
+    //     format: winston.format.combine(
+    //         winston.format.timestamp(),
+    //         winston.format.printf(info => `${info.timestamp} [${info.level}]: ${info.message}`),
+    //     ),
+    //     handleExceptions: true
+    // }));
 
     // //throw new Error('Index.js error');
     // const p = Promise.reject(new Error('Something failed in the index!'));

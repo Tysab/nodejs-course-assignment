@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey": ""
+    "jwtPrivateKey": "",
+    "db_test": "mongodb+srv://tysab:lwme7CsouqwLHhXy@db-test-22qol.mongodb.net/test?retryWrites=true&w=majority"
 }
