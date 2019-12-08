@@ -15,9 +15,10 @@ module.exports = function (key) {
     //     });
 
     //  Test environment DB connection
-    mongoose.connect(config.get('db_test'))
+    const db = config.get('db_test');
+    mongoose.connect(db)
         .then(() => {
-            winston.info('Connected to MongoDB...'),
-                console.log('Connected to MongoDB...')
+            winston.info(`Connected to ${db}...`),
+                console.log(`Connected to ${db}...`)
         });
 }

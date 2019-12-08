@@ -4,11 +4,18 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Fawn = require('fawn');
-const { Author } = require('../models/author');
-const { Course, validate } = require('../models/course');
-const { Difficulty } = require('../models/difficulty');
+const {
+    Author
+} = require('../models/author');
+const {
+    Course,
+    validate
+} = require('../models/course');
+const {
+    Difficulty
+} = require('../models/difficulty');
 
-Fawn.init(mongoose);
+//Fawn.init(mongoose);
 
 
 router.get('/', async (req, res) => {
@@ -40,7 +47,9 @@ router.get('/', async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
 
-    const { error } = validate(req.body);
+    const {
+        error
+    } = validate(req.body);
 
     if (!error) {
         console.log('Course input-validation pass');
@@ -49,27 +58,19 @@ router.post('/', auth, async (req, res) => {
         return res.status(400).send(`Something went wrong: ${error.details[0].message}`);
     }
 
-    try {
-        let course = new Course({
-            name: req.body.name,
-            category: req.body.category,
-            author: req.body.author,
-            tags: [req.body.tags],
-            isPublished: true,
-            price: req.body.price,
-            difficulty: req.body.difficulty
-        });
+    let course = new Course({
+        name: req.body.name
+    });
 
-        //let course_save = await course.save();
+    course = await course.save();
+    res.send(course);
 
-        new Fawn.Task()
-            .save('courses', course)
-            .run();
-    } catch (ex) {
-        res.status(500).send(ex);
-    }
+    // new Fawn.Task()
+    //     .save('courses', course)
+    //     .run();
 
-    res.send('Course Added! <a href="/courses">Go back to /courses</a>');
+
+    //res.send('Course Added! <a href="/courses">Go back to /courses</a>');
 
     // } catch (ex) {
     //     for (field in ex.errors)

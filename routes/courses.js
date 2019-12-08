@@ -13,6 +13,11 @@ const {
     Difficulty
 } = require('../models/difficulty');
 
+// FOR TESTING
+router.get('/find', async (req, res) => {
+    const courses = await Course.find().sort('name');
+    res.send(courses);
+  });
 
 router.get('/', async (req, res) => { // views all courses
     console.log('Connected to /courses');
