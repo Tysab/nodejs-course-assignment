@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 const mongoose = require('mongoose');
 const {
     Course
@@ -62,6 +63,25 @@ router.get('/', async (req, res) => { // views all courses
 
         });
 
+});
+
+router.post('/returns', auth, async (req, res) => {
+    if(!req.body.authorId) return res.status(400).send('authorId not provided');
+    if(!req.body.courseId) return res.status(400).send('courseId not provided');
+
+    //  Static: Course.lookup
+    //  Instance: new Author().generateAuthToken()
+
+    const course = await Course.lookup(req.body.authorId, req.body.courseId);
+
+    if(!course) return res.status(404).send('Course not found');
+
+    if(course.date) return res.status(400).send('date already exists');
+
+    course.date = new Date();
+    await course.save();
+    
+    return res.send(course);
 });
 
 
