@@ -7,7 +7,7 @@ const {
 } = require('../../models/course');
 let server;
 
-describe('auth middleware', () => {
+describe('auth middleware', () => { 
     beforeEach(() => {
         server = require('../../index');
     });
