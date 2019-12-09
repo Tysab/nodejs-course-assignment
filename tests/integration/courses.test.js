@@ -15,7 +15,9 @@ describe('/courses', () => {
     afterEach(async () => {
         server.close();
         await Course.remove({});
+        await Author.remove({});
     });
+
 
     describe('GET /courses/find', () => {
 
@@ -55,6 +57,14 @@ describe('/courses', () => {
         it('should return 404 if invalid _id or name is passed', async () => {
 
             const res = await request(server).get('/courses/view/1/coursename');
+
+            expect(res.status).toBe(404);
+        });
+
+        it('should return 404 if no course with the given _id exists', async () => {
+
+            const id = mongoose.Types.ObjectId;
+            const res = await request(server).get('/courses/view/' + id + '/coursename');
 
             expect(res.status).toBe(404);
         });
@@ -125,8 +135,40 @@ describe('/courses', () => {
             expect(res.body).toHaveProperty('_id');
             expect(res.body).toHaveProperty('name', 'course1');
         });
-    })
+    });
+
+    describe('DELETE /courses/delete/:id/:name', () => {
+
+        
+        let token;
+
+        const exec = async (id, name) => {
+            return await request(server)
+                .get(`/courses/delete/${id}/${name}`)
+                .set('x-auth-token', token);
+        };
+
+        beforeEach(() => {
+            token = new Author({
+                name: 'Tyler Broere',
+                email: "tylerhisemail@email.com",
+                password: '123456',
+                isAdmin: true
+            }).generateAuthToken();
+        });
+
+        it('should return 200 if course is deleted', async () => {
+
+            const course = new Course({
+                name: 'course1'
+            });
+            await course.save();
+
+            const res = await exec();
+            expect(res.status).toBe(200);
+        });
+
+    });
 
 
-
-})
+});
