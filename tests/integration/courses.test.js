@@ -19,6 +19,23 @@ describe('/courses', () => {
     });
 
 
+    let token;
+
+    const exec = async (id, name) => {
+        return await request(server)
+            .get(`/courses/delete/${id}/${name}`)
+            .set('x-auth-token', token);
+    };
+
+    beforeEach(() => {
+        token = new Author({
+            name: 'Tyler Broere',
+            email: "tylerhisemail@email.com",
+            password: '123456',
+            isAdmin: true
+        }).generateAuthToken();
+    });
+
     describe('GET /courses/find', () => {
 
         it('should return all courses', async () => {
@@ -138,25 +155,6 @@ describe('/courses', () => {
     });
 
     describe('DELETE /courses/delete/:id/:name', () => {
-
-        
-        let token;
-
-        const exec = async (id, name) => {
-            return await request(server)
-                .get(`/courses/delete/${id}/${name}`)
-                .set('x-auth-token', token);
-        };
-
-        beforeEach(() => {
-            token = new Author({
-                name: 'Tyler Broere',
-                email: "tylerhisemail@email.com",
-                password: '123456',
-                isAdmin: true
-            }).generateAuthToken();
-        });
-
         it('should return 200 if course is deleted', async () => {
 
             const course = new Course({
@@ -164,7 +162,10 @@ describe('/courses', () => {
             });
             await course.save();
 
-            const res = await exec();
+            const res = await request(server)
+            .get('/courses/delete/' + course._id + "/" + course.name)
+            .set('x-auth-token', token);
+
             expect(res.status).toBe(200);
         });
 
