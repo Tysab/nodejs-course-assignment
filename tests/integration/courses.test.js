@@ -21,12 +21,6 @@ describe('/courses', () => {
 
     let token;
 
-    const exec = async (id, name) => {
-        return await request(server)
-            .get(`/courses/delete/${id}/${name}`)
-            .set('x-auth-token', token);
-    };
-
     beforeEach(() => {
         token = new Author({
             name: 'Tyler Broere',
